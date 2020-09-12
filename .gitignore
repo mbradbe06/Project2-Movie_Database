@@ -128,8 +128,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# API key
-Leaflet-Step-1/static/js/config.js
-Leaflet-Step-2/static/js/config.js
-config.js
+
+# Ignore folder named data
+/data
+
+# Ignore python file with stored password
 secret.py
+
+# API key
+static/js/config.js
+config.js
