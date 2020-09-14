@@ -1,5 +1,4 @@
 // Code for creating map
-
 // Create the dark tile layer that will be the background of our map
 const darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -50,7 +49,7 @@ var queryUrl = "/api/v1.0/movies";
 
 // Grab the data with d3
 d3.json(queryUrl, function(data) {
-    console.log(data);
+    // console.log(data);
 
     // Create a new marker cluster group
     const markers = L.markerClusterGroup();
@@ -63,13 +62,17 @@ d3.json(queryUrl, function(data) {
             .bindPopup("<h3>" + movie.title + "</h3><hr><p>" + movie.company + "</p>");
             markers.addLayer(marker);
         }
-
-        // Return all the movienames
-        var names = movie.title
-        
-        const idDropdown = d3.select("#selDataset").append("option");
-        idDropdown.text(names);
     });
+
+    // form array of unique genres
+    var genres = data.map(genres => genres.genre)
+    var uniqueGenres = genres.filter((x, ind, arr) => arr.indexOf(x) === ind)
+    // Append dates to dropdown
+    uniqueGenres.forEach(function(genre) {
+      var genreDropdown = d3.select("#selDataset").append("option");
+      genreDropdown.text(genre);
+    });
+    console.log(uniqueGenres)
 
     // Add our marker cluster layer to the map
     markers.addTo(layers.movies);

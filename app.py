@@ -9,10 +9,10 @@ from flask import Flask, jsonify, render_template
 #################################################
 # Database Setup
 #################################################
-rds_connection_string = f'postgres:postgres@localhost:5432/movies_db'
-engine = create_engine(f'postgresql://{rds_connection_string}')
-# url = 'postgres://zttrfwwdkbvjri:993e860c0b322e56c742c10a0edd25113b9ed456845f9c82571ae166641b32f3@ec2-100-25-100-81.compute-1.amazonaws.com:5432/d90qpidcl4m7ls'
-# engine = sqlalchemy.create_engine(url)
+# rds_connection_string = f'postgres:postgres@localhost:5432/movies_db'
+# engine = create_engine(f'postgresql://{rds_connection_string}')
+url = 'postgres://iojqcykrasthlf:46c64333c5e836c1eb50be341266b79b3fc712a205d240de628698d27bf1eeea@ec2-3-226-231-4.compute-1.amazonaws.com:5432/df9m7ufmbt05jk'
+engine = sqlalchemy.create_engine(url)
 # reflect an existing database into a new model
 Base = automap_base()
 # reflect the tables
