@@ -50,21 +50,27 @@ var queryUrl = "/api/v1.0/movies";
 
 // Grab the data with d3
 d3.json(queryUrl, function(data) {
-  console.log(data);
+    console.log(data);
 
-  // Create a new marker cluster group
-  const markers = L.markerClusterGroup();
+    // Create a new marker cluster group
+    const markers = L.markerClusterGroup();
     
-  // Loop through data
-  data.forEach(movie => {
-    //Check for location
-    if(movie.lat && movie.lng){
-      const marker = L.marker([movie.lat, movie.lng])
-      .bindPopup("<h3>" + movie.title + "</h3><hr><p>" + movie.company + "</p>");
-      markers.addLayer(marker);
-    }
-  })
+    // Loop through data
+    data.forEach(movie => {
+        //Check for location
+        if(movie.lat && movie.lng){
+            const marker = L.marker([movie.lat, movie.lng])
+            .bindPopup("<h3>" + movie.title + "</h3><hr><p>" + movie.company + "</p>");
+            markers.addLayer(marker);
+        }
 
-  // Add our marker cluster layer to the map
-  markers.addTo(layers.movies);
+        // Return all the movienames
+        var names = movie.title
+        
+        const idDropdown = d3.select("#selDataset").append("option");
+        idDropdown.text(names);
+    });
+
+    // Add our marker cluster layer to the map
+    markers.addTo(layers.movies);
 });
