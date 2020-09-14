@@ -5,6 +5,7 @@ from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify, render_template
 
+from flask_sqlalchemy import SQLAlchemy
 
 #################################################
 # Database Setup
@@ -37,6 +38,7 @@ session = Session(engine)
 #################################################
 app = Flask(__name__)
 
+db = SQLAlchemy(app)
 
 #################################################
 # Flask Routes
