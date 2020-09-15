@@ -1,3 +1,16 @@
+// Code for creating genre drop-down
+d3.json("/api/v1.0/genre_names", function(data) {
+    // form array of unique genres
+    var genres = data.map(genres => genres.genre)
+    var uniqueGenres = genres.filter((x, ind, arr) => arr.indexOf(x) === ind)
+    
+    // Append genres to dropdown
+    uniqueGenres.forEach(function(genre) {
+      var genreDropdown = d3.select("#selGenre").append("option");
+      genreDropdown.text(genre);
+    });
+});
+
 // Code for creating map
 // Create the dark tile layer that will be the background of our map
 const darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -65,18 +78,6 @@ d3.json("/api/v1.0/movies", function(data) {
 
     // Add our marker cluster layer to the map
     markers.addTo(layers.movies);
-});
-
-d3.json("/api/v1.0/genre_names", function(data) {
-    // form array of unique genres
-    var genres = data.map(genres => genres.genre)
-    var uniqueGenres = genres.filter((x, ind, arr) => arr.indexOf(x) === ind)
-    
-    // Append genres to dropdown
-    uniqueGenres.forEach(function(genre) {
-      var genreDropdown = d3.select("#selGenre").append("option");
-      genreDropdown.text(genre);
-    });
 });
 
 // Function to handle changes in dropdown
