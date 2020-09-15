@@ -1,3 +1,5 @@
+import pandas as pd
+# Python SQL toolkit and Object Relational Mapper
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -14,7 +16,7 @@ from flask import Flask, jsonify, render_template
 # engine = create_engine(f'postgresql://{rds_connection_string}')
 url = 'postgres://kkmcxxxwavsdqd:fb334108f7a36d00866d3a010c69877e6821be0b66fb54f99a642229daaa570a@ec2-54-211-169-227.compute-1.amazonaws.com:5432/d7hg3bbhtgeuu2'
 engine = sqlalchemy.create_engine(url)
-# reflect an existing database into a new model
+# Initialize the Base object using the automap_base in order to refelect the database.
 Base = automap_base()
 # reflect the tables
 Base.prepare(engine, reflect=True)
@@ -28,6 +30,7 @@ mgjunct = Base.classes.movie_genre_junction
 country = Base.classes.country_origin
 countryjunct = Base.classes.movie_country_junction
 companyname = Base.classes.production_company
+Profit = Base.classes.profit
 
 
 # Create our session (link) from Python to the DB
