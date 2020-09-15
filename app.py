@@ -130,6 +130,32 @@ def genre_info():
 
     return jsonify(genre_list)
 
+@app.route("/api/v1.0/profit")
+def profit_array():  
+    # Query the Heroku Postgres Database to DataFrame for the profit table
+    profit_query_stmt = session.query(Profit).statement
+    profit_df = pd.read_sql_query(profit_query_stmt, session.bind)
+
+    # Iterate through the profit_tb_df to create a list of dictionaries (array of objects) for each row
+    profit_list = []
+
+    for index, row in profit_df.iterrows():
+
+        # Profit dict
+        movie_id = row["movie_id"]
+        budget = row["budget"]
+        revenue = row["revenue"]
+        profit = row["profit"]
+
+        row_profit = {"movie_id": movie_id,
+                  "budget": budget,
+                  "revenue": revenue,
+                  "profit": profit
+                 }
+        profit_list.append(row_profit)
+
+    return jsonify(profit_list)
+
 # @app.route("/api/v1.0/companies")
 # def movie_company():
 #     movie_info = session.query(Movie.movie_title, Movie.year_published,\
