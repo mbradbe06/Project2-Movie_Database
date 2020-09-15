@@ -156,6 +156,37 @@ def profit_array():
 
     return jsonify(profit_list)
 
+
+@app.route("/api/v1.0/genre02")
+def profit_genre():  
+    # Query the Heroku Postgres Database to DataFrame and JOIN appropriate tables
+    query1 = session.query(mgjunct.movie_id, Genre.genre_name, Profit.budget, Profit.revenue, Profit.profit)
+    query2 = query1.join(Profit, mgjunct.movie_id == Profit.movie_id)
+    query_stmt = query2.join(Genre, mgjunct.genre_id == Genre.genre_id).statement
+    profit_genre_df = pd.read_sql_query(query_stmt, session.bind)
+    
+    # Iterate through the profit_genre_df to create a list of dictionaries (array of objects) for each row
+    profit_genre_list = []
+    
+    for index, row in profit_genre_df.iterrows():
+
+        # Profit dict
+        movie_id = row["movie_id"]
+        genre_name = row["genre_name"]
+        budget = row["budget"]
+        revenue = row["revenue"]
+        profit = row["profit"]
+
+        row_profit_genre = {"movie_id": movie_id,
+                            "genre_name": genre_name,
+                            "budget": budget,
+                            "revenue": revenue,
+                            "profit": profit
+                 }
+        profit_genre_list.append(row_profit_genre)
+      
+    return jsonify(profit_genre_list)
+
 # @app.route("/api/v1.0/companies")
 # def movie_company():
 #     movie_info = session.query(Movie.movie_title, Movie.year_published,\
