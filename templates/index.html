@@ -33,24 +33,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-4">
           <div class="well">
-            <h5>Genre:</h5>
-            <select id="selDataset" onchange="optionChanged(this.value)"></select>
-          </div>
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">Movie Info</h3>
-            </div>
-            <div id="sample-metadata" class="panel-body">
-            </div>
+            <h5>Choose a genre:</h5>
+            <select id="selGenre" onchange="optionChanged(this.value)">
+              <option hidden disabled selected value> -- select an option -- </option>
+            </select>
           </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-8">
           <div id="bar1"></div>
-        </div>
-        <div class="col-md-5">
-          <div id="bar2"></div>
         </div>
       </div>
       <div class="row">

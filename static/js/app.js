@@ -44,36 +44,68 @@ L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
 }).addTo(map);
 
-// Store our API endpoint inside queryUrl
-var queryUrl = "/api/v1.0/movies";
+// Create a new marker cluster group
+const markers = L.markerClusterGroup();
 
 // Grab the data with d3
-d3.json(queryUrl, function(data) {
-    // console.log(data);
-
-    // Create a new marker cluster group
-    const markers = L.markerClusterGroup();
+d3.json("/api/v1.0/movies", function(data) {
     
     // Loop through data
     data.forEach(movie => {
         //Check for location
         if(movie.lat && movie.lng){
             const marker = L.marker([movie.lat, movie.lng])
-            .bindPopup("<h3>" + movie.title + "</h3><hr><p>" + movie.company + "</p>");
+            .bindPopup("<h3>" + movie.title + 
+            "</h3><hr><p> Year Produced: " + movie.year +
+            "</p><hr><p> Company: " + movie.company + 
+            "</p><hr><p> Avg Votes: " + movie.avg_votes + "</p>");
             markers.addLayer(marker);
         }
     });
 
-    // form array of unique genres
-    var genres = data.map(genres => genres.genre)
-    var uniqueGenres = genres.filter((x, ind, arr) => arr.indexOf(x) === ind)
-    // Append dates to dropdown
-    uniqueGenres.forEach(function(genre) {
-      var genreDropdown = d3.select("#selDataset").append("option");
-      genreDropdown.text(genre);
-    });
-    console.log(uniqueGenres)
-
     // Add our marker cluster layer to the map
     markers.addTo(layers.movies);
 });
+
+d3.json("/api/v1.0/genre_names", function(data) {
+    // form array of unique genres
+    var genres = data.map(genres => genres.genre)
+    var uniqueGenres = genres.filter((x, ind, arr) => arr.indexOf(x) === ind)
+    
+    // Append genres to dropdown
+    uniqueGenres.forEach(function(genre) {
+      var genreDropdown = d3.select("#selGenre").append("option");
+      genreDropdown.text(genre);
+    });
+});
+
+// Function to handle changes in dropdown
+function optionChanged(chosen){
+
+    d3.json("/api/v1.0/genres", function(data){
+        // Clear previous markers
+        markers.clearLayers();
+        
+        // Get data for map based on selected genre
+        const filteredGenre = data.filter(genres => genres.genre === chosen);
+        console.log(filteredGenre)
+    
+        // Loop through data
+        filteredGenre.forEach(movie => {
+            //Check for location
+            if(movie.lat && movie.lng){
+                const marker = L.marker([movie.lat, movie.lng])
+                .bindPopup("<h3>" + movie.title + 
+                "</h3><hr><p> Year Produced: " + movie.year +
+                "</p><hr><p> Company: " + movie.company + 
+                "</p><hr><p> Avg Votes: " + movie.avg_votes + "</p>");
+                markers.addLayer(marker);
+            }
+        });
+        // Add our marker cluster layer to the map
+        markers.addTo(layers.movies);
+    });
+  };
+  
+  // Add event listener for submit button
+  d3.select('#submit').on('click', optionChanged);
