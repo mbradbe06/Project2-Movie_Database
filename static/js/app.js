@@ -110,3 +110,12 @@ function optionChanged(chosen){
   
   // Add event listener for submit button
   d3.select('#submit').on('click', optionChanged);
+
+
+d3.json("/api/v1.0/movies02", function(data) {
+    let theData = data;
+    console.log(`theData`);
+    console.log(theData);
+    
+    
+});
