@@ -1,3 +1,5 @@
+import pandas as pd
+# Python SQL toolkit and Object Relational Mapper
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -12,9 +14,10 @@ from flask_sqlalchemy import SQLAlchemy
 #################################################
 # rds_connection_string = f'postgres:postgres@localhost:5432/movies_db'
 # engine = create_engine(f'postgresql://{rds_connection_string}')
-url = 'postgres://iojqcykrasthlf:46c64333c5e836c1eb50be341266b79b3fc712a205d240de628698d27bf1eeea@ec2-3-226-231-4.compute-1.amazonaws.com:5432/df9m7ufmbt05jk'
+url = 'postgres://kkmcxxxwavsdqd:fb334108f7a36d00866d3a010c69877e6821be0b66fb54f99a642229daaa570a@ec2-54-211-169-227.compute-1.amazonaws.com:5432/d7hg3bbhtgeuu2'
+
 engine = sqlalchemy.create_engine(url)
-# reflect an existing database into a new model
+# Initialize the Base object using the automap_base in order to refelect the database.
 Base = automap_base()
 # reflect the tables
 Base.prepare(engine, reflect=True)
@@ -28,6 +31,7 @@ mgjunct = Base.classes.movie_genre_junction
 country = Base.classes.country_origin
 countryjunct = Base.classes.movie_country_junction
 companyname = Base.classes.production_company
+Profit = Base.classes.profit
 
 
 # Create our session (link) from Python to the DB
@@ -83,6 +87,33 @@ def movie_info():
         movie_list.append(movie_dict)
 
     return jsonify(movie_list)
+
+@app.route("/api/v1.0/profit")
+def profit_array():  
+    # Query the Heroku Postgres Database to DataFrame for the profit table
+    profit_query_stmt = session.query(Profit).statement
+    profit_df = pd.read_sql_query(profit_query_stmt, session.bind)
+    
+    # Iterate through the profit_tb_df to create a list of dictionaries (array of objects) for each row
+    profit_list = []
+    
+    for index, row in profit_df.iterrows():
+
+        # Profit dict
+        movie_id = row["movie_id"]
+        budget = row["budget"]
+        revenue = row["revenue"]
+        profit = row["profit"]
+
+        row_profit = {"movie_id": movie_id,
+                  "budget": budget,
+                  "revenue": revenue,
+                  "profit": profit
+                 }
+        profit_list.append(row_profit)
+      
+    return jsonify(profit_list)
+
 
 # @app.route("/api/v1.0/companies")
 # def movie_company():
