@@ -12,8 +12,15 @@ from flask import Flask, jsonify, render_template
 #################################################
 # rds_connection_string = f'postgres:postgres@localhost:5432/movies_db'
 # engine = create_engine(f'postgresql://{rds_connection_string}')
+
+# Create an engine that can talk to the database
+# password = ''
+# engine = sqlalchemy.create_engine(f'postgresql://postgres:{password}@localhost/Heroku_db')
+
 url = 'postgres://kkmcxxxwavsdqd:fb334108f7a36d00866d3a010c69877e6821be0b66fb54f99a642229daaa570a@ec2-54-211-169-227.compute-1.amazonaws.com:5432/d7hg3bbhtgeuu2'
 engine = sqlalchemy.create_engine(url)
+
+
 # Initialize the Base object using the automap_base in order to refelect the database.
 Base = automap_base()
 # reflect the tables
@@ -174,32 +181,72 @@ def genre_chart_info():
 
     return jsonify(genre_chart_list)
 
-@app.route("/api/v1.0/profit")
-def profit_array():  
-    # Query the Heroku Postgres Database to DataFrame for the profit table
-    profit_query_stmt = session.query(Profit).statement
-    profit_df = pd.read_sql_query(profit_query_stmt, session.bind)
+@app.route("/api/v1.0/profit_movies")
+def profit_route():  
+    # Query the Heroku Postgres Database to DataFrame and JOIN appropriate tables
+    profit_query_1 = session.query(Profit.movie_id, Profit.budget, Profit.revenue, Profit.profit, Movie.movie_title,\
+                          Movie.year_published, Movie.description, Movie.movie_duration, Poster.poster_url)
+    profit_query_2 = profit_query_1.join(Movie, Profit.movie_id == Movie.movie_id)
+    profit_query_stmt = profit_query_2.join(Poster, Profit.movie_id == Poster.movie_id).statement
+    profit_movies_df = pd.read_sql_query(profit_query_stmt, session.bind)
 
-    # Iterate through the profit_tb_df to create a list of dictionaries (array of objects) for each row
-    profit_list = []
-
-    for index, row in profit_df.iterrows():
+    # Iterate through the profit_movies_df to create a list of dictionaries (array of objects) for each row
+    profit_movies_list = []
+    
+    for index, row in profit_movies_df.iterrows():
 
         # Profit dict
         movie_id = row["movie_id"]
+        movie_title = row["movie_title"]
+        year_published = row["year_published"]
+        movie_duration = row["movie_duration"]
+        description = row["description"]
         budget = row["budget"]
         revenue = row["revenue"]
         profit = row["profit"]
+        poster_url = row["poster_url"]
 
-        row_profit = {
-                  "movie_id": movie_id,
-                  "budget": budget,
-                  "revenue": revenue,
-                  "profit": profit
+        row_profit_movies = {"movie_id": movie_id,
+                            "title": movie_title,
+                            "year_pub": year_published,
+                            "duration": movie_duration,
+                            "description": description,
+                            "budget": budget,
+                            "revenue": revenue,
+                            "profit": profit,
+                            "poster_url": poster_url
                  }
-        profit_list.append(row_profit)
+        profit_movies_list.append(row_profit_movies)
+      
+    return jsonify(profit_movies_list)
 
-    return jsonify(profit_list)
+
+# @app.route("/api/v1.0/profit")
+# def profit_array():  
+#     # Query the Heroku Postgres Database to DataFrame for the profit table
+#     profit_query_stmt = session.query(Profit).statement
+#     profit_df = pd.read_sql_query(profit_query_stmt, session.bind)
+
+#     # Iterate through the profit_tb_df to create a list of dictionaries (array of objects) for each row
+#     profit_list = []
+
+#     for index, row in profit_df.iterrows():
+
+#         # Profit dict
+#         movie_id = row["movie_id"]
+#         budget = row["budget"]
+#         revenue = row["revenue"]
+#         profit = row["profit"]
+
+#         row_profit = {
+#                   "movie_id": movie_id,
+#                   "budget": budget,
+#                   "revenue": revenue,
+#                   "profit": profit
+#                  }
+#         profit_list.append(row_profit)
+
+#     return jsonify(profit_list)
 
 
 # @app.route("/api/v1.0/movies02")
@@ -260,35 +307,37 @@ def profit_array():
 #     return jsonify(profit_movies_list)
 
 
-@app.route("/api/v1.0/profit_genre")
-def profit_genre():  
-    # Query the Heroku Postgres Database to DataFrame and JOIN appropriate tables
-    query1 = session.query(mgjunct.movie_id, Genre.genre_name, Profit.budget, Profit.revenue, Profit.profit)
-    query2 = query1.join(Profit, mgjunct.movie_id == Profit.movie_id)
-    query_stmt = query2.join(Genre, mgjunct.genre_id == Genre.genre_id).statement
-    profit_genre_df = pd.read_sql_query(query_stmt, session.bind)
+# @app.route("/api/v1.0/profit_genre")
+# def profit_genre():  
+#     # Query the Heroku Postgres Database to DataFrame and JOIN appropriate tables
+#     query1 = session.query(mgjunct.movie_id, Genre.genre_name, Profit.budget, Profit.revenue, Profit.profit, Poster.poster_url)
+#     query2 = query1.join(Profit, mgjunct.movie_id == Profit.movie_id)
+#     query_stmt = query2.join(Genre, mgjunct.genre_id == Genre.genre_id).join(Poster, mgjunct.movie_id == Poster.movie_id).statement
+#     profit_genre_df = pd.read_sql_query(query_stmt, session.bind)
     
-    # Iterate through the profit_genre_df to create a list of dictionaries (array of objects) for each row
-    profit_genre_list = []
+#     # Iterate through the profit_genre_df to create a list of dictionaries (array of objects) for each row
+#     profit_genre_list = []
     
-    for index, row in profit_genre_df.iterrows():
+#     for index, row in profit_genre_df.iterrows():
 
-        # Profit dict
-        movie_id = row["movie_id"]
-        genre_name = row["genre_name"]
-        budget = row["budget"]
-        revenue = row["revenue"]
-        profit = row["profit"]
+#         # Profit dict
+#         movie_id = row["movie_id"]
+#         genre_name = row["genre_name"]
+#         budget = row["budget"]
+#         revenue = row["revenue"]
+#         profit = row["profit"]
+#         poster_url = row["poster_url"]
 
-        row_profit_genre = {"movie_id": movie_id,
-                            "genre_name": genre_name,
-                            "budget": budget,
-                            "revenue": revenue,
-                            "profit": profit
-                 }
-        profit_genre_list.append(row_profit_genre)
+#         row_profit_genre = {"movie_id": movie_id,
+#                             "genre_name": genre_name,
+#                             "budget": budget,
+#                             "revenue": revenue,
+#                             "profit": profit,
+#                             "poster_url": poster_url
+#                  }
+#         profit_genre_list.append(row_profit_genre)
       
-    return jsonify(profit_genre_list)
+#     return jsonify(profit_genre_list)
 
 # @app.route("/api/v1.0/companies")
 # def movie_company():
