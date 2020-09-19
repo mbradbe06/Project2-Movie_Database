@@ -34,7 +34,7 @@
     <a class="navbar-brand" href="https://trackrun82-movies.herokuapp.com/">
       <h2 style="font-size:3vw;">
         <span class="text-warning font-weight-bold">Movie </span>
-        <span class="text-white font-weight-bold">Dashboard</span>
+        <span class="text-white font-weight-bold ">Dashboard</span>
       </h2>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -81,17 +81,37 @@
     </div>
 
     <!-- The 5 most profitable movies -->
-
     <div class="row">
-      <div class="col-md-6 mx-auto">
-        <!-- Title -->
-        <h1 class="poster">The Profitable Movies In Our Database - Infinite Scroll</h1>
-        <!-- Loader -->
-        <div class="loader" id="loader">
-          <img src="../static/images/loader.svg" alt="Loading">
+      <div class="col-md-2 text-center">
+        <aside class="filters">
+          <div class="panel panel-default">
+            <div class="panel-heading lead font-weight-bold m-2">Filter Search</div>
+            <div class="panel-body">
+
+              <!-- Form -->
+              <form>
+
+                <button id="filter-btn" type="button" class="btn btn-outline-warning btn-lg m-2 px-3">Filter Table</button>
+              </form>
+              <!-- End of form -->
+
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Poster -->
+      <div class="col-md-10 mx-auto">
+        <div id="poster-area" class="mb-0">
+          <!-- Title -->
+          <h1 class="poster">The Profitable Movies In Our Database - Infinite Scroll</h1>
+          <!-- Loader -->
+          <div class="loader" id="loader">
+            <img src="../static/images/loader.svg" alt="Loading">
+          </div>
+          <!-- Image Container -->
+          <div class="image-container" id="image-container"></div>
         </div>
-        <!-- Image Container -->
-        <div class="image-container" id="image-container"></div>
       </div>
     </div>
 
@@ -139,7 +159,7 @@
   <!-- API key -->
   <script src='../static/js/config.js'></script>
   <!-- Our JS -->
-  <script src='../static/js/app.js'></script>
+  <!-- <script src='../static/js/app.js'></script> -->
   <script src='../static/js/appPoster.js'></script>
 
   <!-- Bootstrap JS -->
