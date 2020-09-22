@@ -55,70 +55,69 @@
       <div class="row">
         <div class="col-md-12 text-center">
           <h3>Movies by Production Company Country Base</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
           <div id="map"></div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div id="line1"></div>
-        </div>
-        <div class="col-md-6">
-          <div id="chartdiv"></div>
+      <hr>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <div id="line1"></div>
+          </div>
+          <div class="col-md-6">
+            <div id="chartdiv"></div>
+          </div>
         </div>
       </div>
+      <hr>
 
       <!-- Table -->
       <div class="row">
         <div class="col-md-12 text-center">
           <p></p>
           <h3>Movie Stats</h3>
-        </div>
-      </div>
-
-      <table id="movies" class="display" width="100%"></table>
-
-      <!-- Poster stuff: The most profitable movies -->
-    <div class="container" id="poster-container">
-      <!-- The most profitable movies -->
-      <div class="row">
-        <div class="col-md-2 text-center">
-          <aside class="filters">
-            <div class="panel panel-default">
-              <div class="panel-heading lead font-weight-bold m-2">Filter Search</div>
-              <div class="panel-body">
-
-                <!-- Form -->
-                <form>
-
-                  <button id="filter-btn" type="button" class="btn btn-outline-warning btn-lg m-2 px-3">Filter Table</button>
-                </form>
-                <!-- End of form -->
-
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <!-- Poster -->
-        <div class="col-md-10 mx-auto">
-          <div id="poster-area" class="mb-0">
-            <!-- Title -->
-            <h1 class="poster">The Profitable Movies In Our Database - Infinite Scroll</h1>
-            <!-- Loader -->
-            <div class="loader" id="loader">
-              <img src="../static/images/loader.svg" alt="Loading">
-            </div>
-            <!-- Image Container -->
-            <div class="image-container" id="image-container"></div>
+          <div id="section">
+            <table id="movies" class="display" width="100%"></table>
           </div>
         </div>
       </div>
-    </div>
-    <!-- End poster stuff: The most profitable movies -->
+      <hr>
+
+
+      <!-- Poster stuff: The most profitable movies -->
+      <div class="container" id="poster-container">
+        <div class="row">
+          <div class="col-md-2 text-center">
+            <aside class="filters">
+              <div class="panel panel-default">
+                <!-- <div class="panel-heading lead font-weight-bold m-2">Filter Search</div> -->
+                <div class="panel-body">
+                  <!-- Form -->
+                  <form></form>
+                  <button id="filter-btn" type="button" class="btn btn-outline-warning btn-lg m-2 px-3">Click to Filter</button>
+                  <!-- End of form -->
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <!-- Poster -->
+          <div class="col-md-10 mx-auto">
+            <div id="poster-area" class="mb-0">
+              <!-- Title -->
+              <h1 class="poster">Profitable Movies In Our Database - Infinite Scroll</h1>
+              <!-- Loader -->
+              <div class="loader" id="loader">
+                <img src="../static/images/loader.svg" alt="Loading">
+              </div>
+              <!-- Image Container -->
+              <div class="image-container" id="image-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End poster stuff: The most profitable movies -->
+
 
       <!-- Navigation Toolbar -->
       <nav class="navbar navbar-dark bg-dark fixed-bottom">

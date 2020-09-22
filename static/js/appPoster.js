@@ -32,10 +32,10 @@ function displayPhotos(displayData) {
     imagesLoaded = 0;
     totalImages = displayData.length;
 
-    console.log(`totalImages`);
-    console.log(totalImages);
-    console.log(`displayData`);
-    console.log(displayData);
+    // console.log(`totalImages`);
+    // console.log(totalImages);
+    // console.log(`displayData`);
+    // console.log(displayData);
 
     // The currency formatter
     const formatter = new Intl.NumberFormat('en-US', {
@@ -157,8 +157,8 @@ async function getPhotos() {
                 .key(d => d.year_pub).sortKeys(d3.ascending)
                 .entries(myData_sorted);
 
-        console.log("nested_data_year");
-        console.log(nested_data_year);
+        // console.log("nested_data_year");
+        // console.log(nested_data_year);
 
         theKeysYear = nested_data_year.map(d => d.key);
 
