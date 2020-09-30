@@ -10,7 +10,7 @@ The goals of this project were to:
 	* [IMDb movies.csv](https://www.kaggle.com/stefanoleone992/imdb-extensive-dataset?select=IMDb+movies.csv)
 	* [IMDb names.csv](https://www.kaggle.com/stefanoleone992/imdb-extensive-dataset?select=IMDb+names.csv)
 * Database was created in PostgreSQL Server using
-	* ![Movie ERD Diagram](Project 2 Movie ERD.pdf)
+	* [Movie ERD Diagram](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/Project%202%20Movie%20ERD.pdf)
 	* [Movie Jupyter Notebook](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/Main_ETL_project2.ipynb)
 * Database [Movies Backup](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/movies%20backup) was uploaded and is hosted on Heroku
 * Python Flask-powered routes were created to access data [app.py](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/app.py)
