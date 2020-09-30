@@ -149,7 +149,7 @@ d3.json("/api/v1.0/genre_charts", (movieData => {
 
     const layout = {
         title: {
-            text: '<b>Worldwide Movie Genre Gross by Year</b>',
+            text: '<b>Worldwide Movie Genre<br>Gross by Year</b>',
             font: {
                 color: '#343A40',
                 fontSize: 20
@@ -377,7 +377,7 @@ function optionChanged(chosen){
 
             const layout2 = {
                 title: {
-                    text: `<b>Worldwide Movie - ${chosen} Gross by Year</b>`,
+                    text: `<b>Worldwide Movie - ${chosen}<br>Gross by Year</b>`,
                     font: {
                         color: '#343A40',
                         fontSize: 20
