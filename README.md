@@ -18,7 +18,7 @@ The goals of this project were to:
 ## Website Forming
 
 * Basic forming of website was created using [index.html](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/templates/index.html)
-* Inital loading of website utilizes [loader.html](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/static/images/loader.html)
+* Inital loading of website utilizes [loader.svg](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/static/images/loader.svg)
 * The code for formulating the map, charts and table sections is located in [app.js](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/static/js/app.js)
 * The code for formulating the posters section is located in [appPoster.js](https://github.com/mbradbe06/Project2-Movie_Database/blob/master/static/js/appPoster.js)
 
